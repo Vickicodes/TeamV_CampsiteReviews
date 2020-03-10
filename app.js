@@ -17,7 +17,8 @@ var indexRoutes = require("./routes/index"),
     commentRoutes = require("./routes/comments"),
     campsiteRoutes = require("./routes/campsites");
 
-mongoose.connect("mongodb://localhost/campsiteReviews", { useNewUrlParser: true, useUnifiedTopology: true });   
+// mongoose.connect("mongodb://localhost/campsiteReviews", { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect("mongodb://heroku_bp571b58:mfh9s23mapb6j6bdfq2m5scj8o@ds053648.mlab.com:53648/heroku_bp571b58", { useNewUrlParser: true, useUnifiedTopology: true });   
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
