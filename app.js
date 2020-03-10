@@ -11,7 +11,8 @@ var express    = require("express"),
     passport   = require("passport"),
     localStrategy = require("passport-local"),
     seedDB     = require("./seeds"),
-    User       = require("./models/user");                                    
+    User       = require("./models/user"),
+    PORT       = process.env.PORT || 5000;                                    
 
 var indexRoutes = require("./routes/index"),
     commentRoutes = require("./routes/comments"),
@@ -56,6 +57,6 @@ app.use("/campsites", campsiteRoutes);
 
 
 
-app.listen(3000, function() { 
-    console.log('YelpCamp on port 3000'); 
+app.listen(PORT, function() { 
+    console.log('Campsite Reviews on port'); 
   });
