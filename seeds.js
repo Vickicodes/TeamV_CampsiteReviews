@@ -88,58 +88,43 @@ var data = [
 ]
  
 function seedDB(){
+    
    //Remove all campsites
-   Campsite.remove({}, function(err){
+   Campsite.countDocuments({}, function(err, count){
         if(err){
             console.log(err);
         }
-        console.log("removed campsites!");
-        Comment.remove({}, function(err) {
-            if(err){
-                console.log(err);
-            }
-            console.log("removed comments!");
-            //  add a few campsites
-            data.forEach(function(seed){
-                var name = seed.name;
-                var image = seed.image;
-                var url = seed.url;
-                var price = seed.price;
-                var description = seed.description;
-                var author = seed.author;
+        if(count > 0){
+            console.log("campsites found, abandoning seed");
+            return ;
+        } 
+        //  add a few campsites
+        data.forEach(function(seed){
+            var name = seed.name;
+            var image = seed.image;
+            var url = seed.url;
+            var price = seed.price;
+            var description = seed.description;
+            var author = seed.author;
 
-                geocoder.geocode(seed.location, function (err, data) {
-                    if (err || !data.length) {
+            geocoder.geocode(seed.location, function (err, data) {
+                if (err || !data.length) {
+                console.log(err)
+                }
+
+                var lat = data[0].latitude;
+                var lng = data[0].longitude;
+                var location = data[0].formattedAddress;
+
+                // add to campsites db
+                var newCampsite = {name: name, image: image, url: url, description: description, location: location, lat: lat, lng: lng, price: price, author: author}
+                Campsite.create(newCampsite, function(err, newlyCreated){
+                if(err){
                     console.log(err)
-                    }
-
-                    var lat = data[0].latitude;
-                    var lng = data[0].longitude;
-                    var location = data[0].formattedAddress;
-
-                    // add to campsites db
-                    var newCampsite = {name: name, image: image, url: url, description: description, location: location, lat: lat, lng: lng, price: price, author: author}
-                    Campsite.create(newCampsite, function(err, newlyCreated){
-                    if(err){
-                        console.log(err)
-                    } else {
-                        console.log("added a campsite");
-                        // //create a comment
-                        // Comment.create(
-                        //     {
-                        //         text: "This place is great, but I wish there was internet",
-                        //         author: "Homer"
-                        //     }, function(err, comment){
-                        //         if(err){
-                        //             console.log(err);
-                        //         } else {
-                        //             campsite.comments.push(comment);
-                        //             campsite.save();
-                        //             console.log("Created new comment");
-                        //         }
-                        // });
-                    }
-                });
+                } else {
+                    console.log("added a campsite");
+                    
+                }
             });
         });
     }); 
