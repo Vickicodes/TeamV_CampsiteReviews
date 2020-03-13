@@ -12,18 +12,20 @@ var express    = require("express"),
     localStrategy = require("passport-local"),
     seedDB     = require("./seeds"),
     User       = require("./models/user"),
+    url        = process.env.MONGODB_URI || "mongodb://localhost/campsite_reviews",
     PORT       = process.env.PORT || 5000;                                    
 
 var indexRoutes = require("./routes/index"),
     commentRoutes = require("./routes/comments"),
     campsiteRoutes = require("./routes/campsites");
 
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(flash());
+app.locals.moment = require('moment'); 
 app.set("view engine", "ejs");
 
 seedDB();
