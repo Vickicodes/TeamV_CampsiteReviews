@@ -1,5 +1,5 @@
-var mongoose   = require("mongoose")
-var campsiteSchema = new mongoose.Schema({
+const mongoose   = require("mongoose")
+const campsiteSchema = new mongoose.Schema({
     name: String,
     image: String,
     url: String,
