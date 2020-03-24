@@ -1,5 +1,5 @@
 # Team V's Campsite Reviews
-a Campsite Database with personal recommendations.
+a campsite database with personal recommendations.
 
 # Live Site 
 http://campsite-reviews.herokuapp.com/
